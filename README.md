@@ -27,6 +27,7 @@
   ```
 
   * stop server
+  
   Press Control + C (2 times)
 
 
