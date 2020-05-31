@@ -11,4 +11,4 @@ echo "===============================[Start Running]============================
 mkdir -p logs
 logpath=./logs/$(date +"%Y-%m-%d@%H_%M_%S").log
 nohup mix phx.server > $logpath &
-echo "🐶Deploy Success"
+echo "🐶Start Server Success"
