@@ -37,7 +37,7 @@ defmodule IotWeb.UserContext do
   end
 
   defp get_token(conn) do
-    token = fetch_cookies(conn).req_cookies |> Map.get("token")
+    token = fetch_cookies(conn).req_cookies |> Map.get("token") |> IO.inspect
     {:ok, token}
   end
 

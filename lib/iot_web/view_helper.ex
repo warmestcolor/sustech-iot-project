@@ -27,6 +27,8 @@ defmodule IotWeb.ViewHelper do
     {:ok, token}
   end
 
+  defp get_current_user(nil), do: get_current_user(-1)
+  defp get_current_user(""), do: get_current_user(-1)
   defp get_current_user("user_" <> user_id) do
     Accounts.get_user!(user_id)
   end
