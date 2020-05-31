@@ -1,0 +1,88 @@
+<html>
+  <head>
+    <title>Map Page</title>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6w7v4fhlfIlDNt27yrePPVM1aSW1jFy5"></script>
+    <style type="text/css">  
+        html{height:100%}  
+        body{height:100%;margin:0px;padding:0px}  
+        #container{height:100%}  
+    </style>  
+  </head>
+  <body>
+    <div id="container" style="height: 100%; width: 100%">
+    </div>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    function getQueryVariable(variable){
+      var query = window.location.search.substring(1);
+      var vars = query.split("&");
+      for (var i=0;i<vars.length;i++) {
+              var pair = vars[i].split("=");
+              if(pair[0] == variable){return pair[1];}
+      }
+      return(false);
+    }
+    function startShowGps(lat, lon) {
+      var map = new BMap.Map("container");
+      // 创建地图实例  
+      var point = new BMap.Point(lat, lon);
+      // 创建点坐标  
+      map.centerAndZoom(point, 12);
+      var marker = new BMap.Marker(point);        // 创建标注    
+      map.addOverlay(marker);
+      map.enableScrollWheelZoom(true);     //开启鼠标滚轮缩放
+    }
+    function startShowCurrentGps() {
+      var map = new BMap.Map("container");
+      var point = new BMap.Point(116.331398,39.897445);
+      map.centerAndZoom(point, 12);
+
+      var geolocation = new BMap.Geolocation();
+      geolocation.getCurrentPosition(function(r){
+        if(this.getStatus() == BMAP_STATUS_SUCCESS){
+          var mk = new BMap.Marker(r.point);
+          map.addOverlay(mk);
+          map.panTo(r.point);
+          // alert('gps: '+r.point.lng+','+r.point.lat);
+        }
+        else {
+          // alert('failed'+this.getStatus());
+        }        
+      });
+      // var map = new BMap.Map("allmap");
+      // var point = new BMap.Point(116.331398,39.897445);
+      // map.centerAndZoom(point,12);
+
+      // function myFun(result){
+      //   var cityName = result.name;
+      //   map.setCenter(cityName);
+      //   alert("当前定位城市:"+cityName);
+      // }
+      // var myCity = new BMap.LocalCity();
+      // myCity.get(myFun); 
+    }
+
+    // start
+    $(document).ready(function(){
+      var locationId = getQueryVariable('id')
+      if (locationId == 'current') {
+        startShowCurrentGps()
+      } else {
+        $.ajax({
+        url: `/location/${locationId}`,
+        success: res => {
+          console.log(res)
+          startShowGps(res.latitude, res.longitude)
+        }
+      })
+      }
+    });
+      
+    </script>
+  </body>
+</html>

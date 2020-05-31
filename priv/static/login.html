@@ -1,0 +1,53 @@
+<html>
+  <head>
+    <title>Login Page</title>
+  </head>
+  <body>
+    <div class="container">
+
+      <div class="form-signin">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Username</label>
+        <input id="username" class="form-control" placeholder="Username" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="password" class="form-control" placeholder="Password" required>
+        <button id="signin" class="btn btn-lg btn-primary btn-block">Sign in</button>
+      </div>
+
+    </div> <!-- /container -->
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+      $("#signin").click(function(){
+        var data = { 
+          username: $("#username").val(),
+          password: $("#password").val(),
+        }
+        console.log(data)
+        $.ajax({
+          url: '/login',
+          method: 'POST',
+          data: data,
+          success: res => {
+            console.log(res)
+            if (res.code === 1) {
+              alert("Login Success")
+              document.cookie = 'token=' + res.user_id;
+              window.location.href = '/locations'
+            } else {
+              alert(res.message)
+            }
+          },
+          error: res => {
+            console.log(res)
+            alert(res.responseJSON.message)
+          }
+        })
+      });
+    </script>
+  </body>
+</html>
