@@ -57,30 +57,47 @@
       // var map = new BMap.Map("allmap");
       // var point = new BMap.Point(116.331398,39.897445);
       // map.centerAndZoom(point,12);
-
-      // function myFun(result){
-      //   var cityName = result.name;
-      //   map.setCenter(cityName);
-      //   alert("当前定位城市:"+cityName);
-      // }
-      // var myCity = new BMap.LocalCity();
-      // myCity.get(myFun); 
+ 
     }
+
+    function whereAmI2() {
+      alert('???>>>')
+      var map = new BMap.Map("container");
+      function myFun(result){
+        var cityName = result.name;
+        console.log({result})
+        map.setCenter(cityName);
+        alert("当前定位城市:"+cityName);
+        alert(result.center.lat)
+      }
+      var myCity = new BMap.LocalCity();
+      myCity.get(myFun);
+    }
+    function whereAmI() {
+      function myFun(result){
+        var data = JSON.stringify(result)
+        alert(data)
+      }
+      var myCity = new BMap.LocalCity();
+      myCity.get(myFun);
+    }
+
 
     // start
     $(document).ready(function(){
-      var locationId = getQueryVariable('id')
-      if (locationId == 'current') {
-        startShowCurrentGps()
-      } else {
-        $.ajax({
-        url: `/location/${locationId}`,
-        success: res => {
-          console.log(res)
-          startShowGps(res.latitude, res.longitude)
-        }
-      })
-      }
+      whereAmI()
+      // var locationId = getQueryVariable('id')
+      // if (locationId == 'current') {
+      //   startShowCurrentGps()
+      // } else {
+      //   $.ajax({
+      //   url: `/location/${locationId}`,
+      //   success: res => {
+      //     console.log(res)
+      //     startShowGps(res.latitude, res.longitude)
+      //   }
+      // })
+      // }
     });
       
     </script>

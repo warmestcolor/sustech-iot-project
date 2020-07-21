@@ -25,13 +25,16 @@ defmodule IotWeb.Router do
   end
 
   scope "/", IotWeb do
-    pipe_through [:browser, :require_user]
+    # pipe_through [:browser, :require_user]
+    pipe_through [:browser]
     resources "/locations", LocationController
   end
 
   scope "/", IotWeb do
     post "/login", LoginController, :login
     get "/location/:id", LocationController, :show_json
+
+    post "report_locs", LocaController, :report
   end
 
   # Other scopes may use custom stacks.

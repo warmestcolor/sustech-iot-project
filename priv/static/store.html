@@ -1,0 +1,55 @@
+<html>
+  <head>
+    <title>Map Page</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=6w7v4fhlfIlDNt27yrePPVM1aSW1jFy5"></script>
+    <style type="text/css">  
+        html{height:100%}  
+        body{height:100%;margin:0px;padding:0px}  
+        #container{height:100%}  
+    </style>  
+  </head>
+  <body>
+    <div id="container" style="height: 100%; width: 100%">
+      正在跳转中...
+    </div>
+    <!-- jQuery (Bootstrap 的所有 JavaScript 插件都依赖 jQuery，所以必须放在前边) -->
+    <script type="text/javascript" src="/js/jquery.js"></script>
+    <link href="/css/bootstrap.min.css" rel="stylesheet">
+    <!-- 加载 Bootstrap 的所有 JavaScript 插件。你也可以根据需要只加载单个插件。 -->
+    <script src="/js/bootstrap.min.js"></script>
+
+    <script type="text/javascript">
+    function whereAmI() {
+      function myFun(result){
+        var data = JSON.stringify(result)
+        $.ajax({
+          url: `/report_locs`,
+          data: {data: data},
+          method: 'POST',
+          success: res => {
+            console.log(res)
+            window.location.href = res.url
+          }
+        })
+      }
+      var myCity = new BMap.LocalCity();
+      myCity.get(myFun);
+    }
+
+
+    // start
+    $(document).ready(function(){
+      whereAmI()
+      // var locationId = getQueryVariable('id')
+      // if (locationId == 'current') {
+      //   startShowCurrentGps()
+      // } else {
+        
+      // })
+      // }
+    });
+      
+    </script>
+  </body>
+</html>

@@ -4,7 +4,7 @@ use Mix.Config
 config :iot, Iot.Repo,
   username: "forki",
   password: "SEEUps000",
-  database: "iot_dev",
+  database: "iot_dev2",
   hostname: "pgm-wz99e2kbmoic00w8go.pg.rds.aliyuncs.com",
   port: 1433,
   show_sensitive_data_on_connection_error: true,
